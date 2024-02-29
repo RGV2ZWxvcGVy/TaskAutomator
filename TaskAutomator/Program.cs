@@ -24,13 +24,16 @@ while (true) // Keep listening to user input
 			Console.Write("Enter the maximum file size (MB): ");
 			int size = int.TryParse(Console.ReadLine(), out size) ? size : default; // Added basic parsing with fallback
 
+			Console.Write("Enter the file extensions you want to move, for example, [.jpeg, .jpg, .png] (leave empty to move all files): ");
+			string fileExtensions = Console.ReadLine() ?? string.Empty;
+
 			Console.Write("Enter the source directory name: ");
 			string sourceDirectory = Console.ReadLine() ?? string.Empty;
 
 			Console.Write("Enter the target directory name: ");
 			string targetDirectory = Console.ReadLine() ?? string.Empty;
 
-			action = () => BulkActions.Media.MoveFilesIntoTargetDirectory(size, sourceDirectory, targetDirectory);
+			action = () => BulkActions.Media.MoveFilesIntoTargetDirectory(size, fileExtensions, sourceDirectory, targetDirectory);
 			break;
 		case "2":
 			Console.Write("Enter the target directory name: ");

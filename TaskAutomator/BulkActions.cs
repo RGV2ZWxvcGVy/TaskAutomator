@@ -16,7 +16,7 @@
 			/// <param name="maxFileSize">The maximum file size in MB, which indicates the file should be moved into a separate directory.</param>
 			/// <param name="sourceDirectory">The source directory that contains the files that should be moved.</param>
 			/// <param name="targetDirectory">The target directory that contains the files that exceed the max allowed file size.</param>
-			public static void MoveFilesIntoTargetDirectory(int maxFileSize, string sourceDirectory, string targetDirectory)
+			public static void MoveFilesIntoTargetDirectory(int maxFileSize, string fileExtensions, string sourceDirectory, string targetDirectory)
 			{
 				if (IsFilePathValid(sourceDirectory) && !Directory.Exists(sourceDirectory))
 				{
@@ -40,8 +40,8 @@
 					{
 						FileInfo fileInfo = new(file);
 
-						// Check if file size is [x] MB or larger
-						if (fileInfo.Length >= maxFileSize * 1024 * 1024)
+						// Check for file extension, and file size (in MB), if specified
+						if ((string.IsNullOrWhiteSpace(fileExtensions) || fileExtensions.Contains(fileInfo.Extension, StringComparison.OrdinalIgnoreCase)) && fileInfo.Length >= maxFileSize * 1024 * 1024)
 						{
 							string newFileName = $"{folderName}_{fileInfo.Name}";
 							string newFilePath = Path.Combine(targetDirectory, newFileName);
