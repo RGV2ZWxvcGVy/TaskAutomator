@@ -87,9 +87,10 @@
 						// Ensure the original folder exists
 						if (IsFilePathValid(originalFolderPath) && !Directory.Exists(originalFolderPath))
 						{
-							Console.WriteLine($"Original folder does not exist: {originalFolderPath}");
-							continue;
-						}
+							// Create the folder if it does not exist
+							PerformFileOperation(originalFolderPath, () => Directory.CreateDirectory(originalFolderPath));
+                            Console.WriteLine($"Created folder: {originalFolderPath}");
+                        }
 
 						// Move the file back to its original folder
 						PerformFileOperation(originalFilePath, () => File.Move(file, originalFilePath));
